@@ -360,14 +360,16 @@ void readMPU6050(int patientId, float* ax, float* ay, float* az) {
 // ─── Đọc toàn bộ dữ liệu bệnh nhân ───────────────────────────────────────
 void readPatient(int patientId, PatientData* data) {
 #if !USE_MOCK_DATA
-#if USE_TCA9548A
-    selectChannel(MAX30102_CH[patientId]);
-    data->sensorConnected = isDeviceConnected(ADDR_MAX30102);
-#else
-    // Không có TCA → check trên bus tương ứng của BN
-    wireBus[patientId]->beginTransmission(ADDR_MAX30102);
-    data->sensorConnected = (wireBus[patientId]->endTransmission() == 0);
-#endif
+    // Check CA MAX lan MPU — mat 1 trong 2 cung coi la sensor detach
+    TwoWire* bus = wireBus[patientId];
+
+    bus->beginTransmission(ADDR_MAX30102);
+    bool maxAck = (bus->endTransmission() == 0);
+
+    bus->beginTransmission(mpuAddr[patientId]);   // 0x68 hoac 0x69 tuy AD0
+    bool mpuAck = (bus->endTransmission() == 0);
+
+    data->sensorConnected = (maxAck && mpuAck);
 #else
     data->sensorConnected = true;
 #endif

@@ -80,7 +80,7 @@
 // Nguoi nha — moi BN 1 chat ID, CHI nhan canh bao cua BN do
 // Neu de trong ("") se bo qua (khong gui cho nguoi nha BN do)
 #define CHAT_ID_FAMILY_BN1   "8487264082"   // <- Dan chat_id cua nguoi nha BN#1 vao day
-#define CHAT_ID_FAMILY_BN2   ""   // <- Dan chat_id cua nguoi nha BN#2 vao day
+#define CHAT_ID_FAMILY_BN2   "1421126628"   // <- Dan chat_id cua nguoi nha BN#2 vao day
 
 // Backward compat: CHAT_ID cu van tro den bac si (cho code goi sendTelegram() truc tiep)
 #define CHAT_ID              CHAT_ID_DOCTOR
