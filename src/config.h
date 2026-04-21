@@ -85,6 +85,13 @@
 // Backward compat: CHAT_ID cu van tro den bac si (cho code goi sendTelegram() truc tiep)
 #define CHAT_ID              CHAT_ID_DOCTOR
 
+// ===== Ten benh nhan (hien thi trong Telegram) =====
+// De trong "" -> hien thi mac dinh "Benh nhan #N"
+#define PATIENT_NAME_BN1     "Nguyen Van Minh"
+#define PATIENT_NAME_BN2     "Pham Thi Lan"
+#define PATIENT_NAME_BN3     ""
+#define PATIENT_NAME_BN4     ""
+
 // ===== MQTT =====
 #define MQTT_BROKER      "broker.hivemq.com"
 #define MQTT_PORT        1883

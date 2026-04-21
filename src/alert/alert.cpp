@@ -27,6 +27,23 @@ bool checkThresholds(PatientData* data) {
     return (data->state != data->prevState);
 }
 
+// Mang ten benh nhan, index = patientId
+static const char* PATIENT_NAMES[MAX_PATIENTS] = {
+    PATIENT_NAME_BN1,
+    PATIENT_NAME_BN2,
+    PATIENT_NAME_BN3,
+    PATIENT_NAME_BN4
+};
+
+// Lay ten hien thi: "Ten That (BN#N)" neu co ten, "Benh nhan #N" neu khong
+static String getPatientName(int id) {
+    String fallback = "Benh nhan #" + String(id + 1);
+    if (id < 0 || id >= MAX_PATIENTS) return fallback;
+    const char* name = PATIENT_NAMES[id];
+    if (!name || !name[0]) return fallback;
+    return String(name) + " (BN#" + String(id + 1) + ")";
+}
+
 String buildAlertMessage(const PatientData* data) {
     // Lấy thời gian hệ thống dạng HH:MM:SS từ millis()
     unsigned long t = millis() / 1000UL;
@@ -34,7 +51,7 @@ String buildAlertMessage(const PatientData* data) {
     snprintf(timeStr, sizeof(timeStr), "%02lu:%02lu:%02lu",
              t / 3600UL, (t % 3600UL) / 60UL, t % 60UL);
 
-    String patName = "Benh nhan #" + String(data->id + 1);
+    String patName = getPatientName(data->id);
     String msg;
 
     switch (data->state) {

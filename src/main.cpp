@@ -161,8 +161,15 @@ static void taskPatient(void* pvParameters) {
         if (!patients[id].sensorConnected) {
             unsigned long now = millis();
             if ((now - patients[id].lastAlertSent) >= TELEGRAM_COOLDOWN_MS) {
-                String msg = "MAT KET NOI CAM BIEN -- Benh nhan #" +
-                             String(id + 1) +
+                // Lay ten benh nhan tu config
+                static const char* names[MAX_PATIENTS] = {
+                    PATIENT_NAME_BN1, PATIENT_NAME_BN2,
+                    PATIENT_NAME_BN3, PATIENT_NAME_BN4
+                };
+                String patName = (names[id] && names[id][0])
+                    ? String(names[id]) + " (BN#" + String(id+1) + ")"
+                    : "Benh nhan #" + String(id+1);
+                String msg = "MAT KET NOI CAM BIEN -- " + patName +
                              "\nKiem tra lai ket noi vat ly";
                 sendTelegram(msg);
                 patients[id].lastAlertSent = now;
